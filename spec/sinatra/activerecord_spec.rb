@@ -9,6 +9,7 @@ describe "the sinatra extension" do
 
   def new_sinatra_application
     Class.new(Sinatra::Base) do
+      reset!
       set :app_file, File.join(ROOT, "tmp/app.rb")
       register Sinatra::ActiveRecordExtension
     end
@@ -52,7 +53,7 @@ describe "the sinatra extension" do
   end
 
   it "accepts a hash for the database" do
-    expect { @app.set :database, {adapter: "sqlite3", database: "tmp/foo.sqlite3"} }.to establish_database_connection
+    expect { @app.set :database, {:adapter => "sqlite3", :database => "tmp/foo.sqlite3"} }.to establish_database_connection
   end
 
   describe "database file" do
